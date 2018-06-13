@@ -1,0 +1,17 @@
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 5c13d2d..6c5ddb5 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -28,6 +28,7 @@ protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS
+                       mutator_test_proto2.proto
+                       mutator_test_proto3.proto)
+ 
++if (PB_MUTATOR_ENABLE_TEST)
+ add_executable(mutator_test
+                mutator_test.cc
+                utf8_fix_test.cc
+@@ -52,3 +53,4 @@ foreach(SHARD RANGE ${TEST_SHARDS_MAX})
+ endforeach(SHARD)
+ 
+ add_dependencies(check mutator_test)
++endif()

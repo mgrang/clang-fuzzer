@@ -1,0 +1,22 @@
+diff --git a/cmake/modules/ProtobufMutator.cmake b/cmake/modules/ProtobufMutator.cmake
+index 5f23f33..df007ba 100644
+--- a/cmake/modules/ProtobufMutator.cmake
++++ b/cmake/modules/ProtobufMutator.cmake
+@@ -1,13 +1,16 @@
+ set(PBM_PREFIX protobuf_mutator)
+ set(PBM_PATH ${CMAKE_CURRENT_BINARY_DIR}/${PBM_PREFIX}/src/${PBM_PREFIX})
++set(PB_PATH <install_path>/install)
+ set(PBM_LIB_PATH ${PBM_PATH}-build/src/libprotobuf-mutator.a)
+ set(PBM_FUZZ_LIB_PATH ${PBM_PATH}-build/src/libfuzzer/libprotobuf-mutator-libfuzzer.a)
++set(CMAKE_MODULE_PATH "${PB_PATH};${CMAKE_MODULE_PATH}")
+ 
+ ExternalProject_Add(${PBM_PREFIX}
+   PREFIX ${PBM_PREFIX}
+-  GIT_REPOSITORY https://github.com/google/libprotobuf-mutator.git
++  GIT_REPOSITORY file:///<libprotobuf_path>/libprotobuf-mutator
+   GIT_TAG master
+   CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
++             -DCMAKE_PREFIX_PATH=${PB_PATH}
+   CMAKE_CACHE_ARGS -DCMAKE_C_COMPILER:FILEPATH=${CMAKE_C_COMPILER}
+                    -DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER}
+   BUILD_BYPRODUCTS ${PBM_LIB_PATH} ${PBM_FUZZ_LIB_PATH}
